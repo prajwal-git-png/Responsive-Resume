@@ -28,7 +28,7 @@ const GradientBall = ({ isPendulum, followCursor }: GradientBallProps) => {
   return (
     <div
       ref={ballRef}
-      className={`fixed w-64 h-64 rounded-full bg-gradient-to-r from-[#8B5CF6] to-[#D946EF] opacity-50 blur-xl
+      className={`fixed w-64 h-64 rounded-full bg-gradient-to-r from-[#1EAEDB] to-[#221F26] opacity-70 blur-xl
         ${isPendulum ? "animate-pendulum" : ""}
         ${followCursor ? "transition-transform duration-300 ease-out" : ""}
       `}

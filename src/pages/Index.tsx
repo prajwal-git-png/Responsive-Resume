@@ -6,6 +6,7 @@ import About from "@/components/home/About";
 import Projects from "@/components/home/Projects";
 import Contact from "@/components/home/Contact";
 import GradientBall from "@/components/home/GradientBall";
+import { ThemeSwitcher } from "@/components/ThemeSwitcher";
 
 const Index = () => {
   useEffect(() => {
@@ -25,6 +26,7 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background text-foreground relative overflow-hidden">
       <Navbar />
+      <ThemeSwitcher />
       {/* Gradient Balls */}
       <GradientBall isPendulum />
       <GradientBall followCursor />
