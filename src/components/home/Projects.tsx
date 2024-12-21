@@ -62,36 +62,37 @@ const ProjectCard = ({
     whileInView={{ opacity: 1, y: 0 }}
     transition={{ duration: 0.5, delay: index * 0.1 }}
     viewport={{ once: true }}
-    className="group relative bg-glass backdrop-blur-lg rounded-2xl overflow-hidden"
+    className="group relative bg-glass backdrop-blur-lg rounded-2xl overflow-hidden cursor-pointer"
   >
-    <div className="aspect-video">
-      <img
-        src={project.image}
-        alt={project.title}
-        className="w-full h-full object-cover"
-      />
-    </div>
-    <div className="p-6">
-      <h3 className="text-xl font-semibold mb-2">{project.title}</h3>
-      <p className="text-foreground/70 mb-4">{project.description}</p>
-      <div className="flex flex-wrap gap-2 mb-4">
-        {project.tags.map((tag) => (
-          <span
-            key={tag}
-            className="text-xs px-3 py-1 rounded-full bg-primary/10 text-primary"
-          >
-            {tag}
-          </span>
-        ))}
+    <Link to={`/project/${project.id}`} className="block">
+      <div className="aspect-video">
+        <img
+          src={project.image}
+          alt={project.title}
+          className="w-full h-full object-cover"
+        />
       </div>
-      <Link
-        to={`/project/${project.id}`}
-        className="inline-flex items-center gap-2 text-primary hover:underline"
-      >
-        View Details
-        <ArrowUpRight size={16} />
-      </Link>
-    </div>
+      <div className="p-6">
+        <h3 className="text-xl font-semibold mb-2 group-hover:text-primary transition-colors">
+          {project.title}
+        </h3>
+        <p className="text-foreground/70 mb-4">{project.description}</p>
+        <div className="flex flex-wrap gap-2 mb-4">
+          {project.tags.map((tag) => (
+            <span
+              key={tag}
+              className="text-xs px-3 py-1 rounded-full bg-primary/10 text-primary"
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
+        <span className="inline-flex items-center gap-2 text-primary group-hover:underline">
+          View Details
+          <ArrowUpRight size={16} />
+        </span>
+      </div>
+    </Link>
   </motion.div>
 );
 
