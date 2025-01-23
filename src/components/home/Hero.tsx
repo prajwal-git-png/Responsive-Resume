@@ -1,42 +1,55 @@
 import { motion } from "framer-motion";
-import { ArrowRight } from "lucide-react";
+import { MagneticText } from "@/components/ui/magnetic-text";
+import { GradientOrbs } from "@/components/ui/gradient-orbs";
 
 const Hero = () => {
   return (
-    <section className="min-h-screen flex items-center justify-center relative overflow-hidden">
-      <div className="container mx-auto px-6 py-20 text-center">
-        <motion.h1
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="text-4xl md:text-6xl font-bold mb-6"
-        >
-          Creative Developer &
-          <br />
-          <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-            Digital Artist
-          </span>
-        </motion.h1>
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          className="text-lg md:text-xl text-foreground/80 mb-8 max-w-2xl mx-auto"
-        >
-          Crafting beautiful digital experiences through code and creativity.
-        </motion.p>
+    <section id="hero-section" className="relative min-h-screen flex items-center justify-center">
+      <GradientOrbs />
+      <div className="container mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.4 }}
+          transition={{ duration: 0.8 }}
+          className="max-w-[90vw] mx-auto"
         >
-          <a
-            href="#projects"
-            className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-6 py-3 rounded-full hover:opacity-90 transition-opacity"
-          >
-            View My Work
-            <ArrowRight size={20} />
-          </a>
+          <h1 className="text-[12vw] md:text-[8vw] font-heading font-bold leading-none tracking-tighter mb-8">
+            <MagneticText>Hello !</MagneticText>
+            <br />
+            <MagneticText>
+              <span className="text-stroke">I'm  Prajwal</span>
+            </MagneticText>
+          </h1>
+          
+          <div className="grid grid-cols-1 md:grid-cols-[2fr,1fr] gap-8 mt-12">
+            <p className="text-lg md:text-xl text-muted-foreground">
+            Aspiring developer dedicated to building creative and efficient solutions – welcome to my portfolio.
+            </p>
+            
+            <div className="flex flex-col gap-4">
+              <MagneticText magneticStrength={0.3}>
+                <motion.a
+                  href="#projects"
+                  className="hover-line inline-flex items-center text-lg"
+                  whileHover={{ x: 10 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  View Projects →
+                </motion.a>
+              </MagneticText>
+              
+              <MagneticText magneticStrength={0.3}>
+                <motion.a
+                  href="#contact"
+                  className="hover-line inline-flex items-center text-lg"
+                  whileHover={{ x: 10 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  Get in Touch →
+                </motion.a>
+              </MagneticText>
+            </div>
+          </div>
         </motion.div>
       </div>
     </section>

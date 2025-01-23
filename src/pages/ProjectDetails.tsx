@@ -1,123 +1,84 @@
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowLeft, ExternalLink, Github } from "lucide-react";
-import { Link } from "react-router-dom";
-import Navbar from "@/components/layout/Navbar";
-import Footer from "@/components/layout/Footer";
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
+import { ArrowLeft, Github, ExternalLink, Code, BookOpen, Wrench } from "lucide-react";
+import { projects } from "@/components/home/Projects";
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
-const projects = [
-  {
-    id: 1,
-    title: "Project One",
-    description: "A beautiful web application built with React and TypeScript.",
-    fullDescription: "This project showcases modern web development practices using React and TypeScript. It features a responsive design, state management with React Query, and a beautiful UI built with Tailwind CSS.",
-    image: "/placeholder.svg",
-    screenshots: ["/placeholder.svg", "/placeholder.svg", "/placeholder.svg"],
-    tags: ["React", "TypeScript", "Tailwind"],
-    demoUrl: "https://demo.example.com",
-    githubUrl: "https://github.com/example/project",
-    codeSnippet: `
-// Example React component
-const Button = ({ children }) => {
-  return (
-    <button className="px-4 py-2 bg-primary text-white rounded-md">
-      {children}
-    </button>
-  );
-};
-    `,
-  },
-  {
-    id: 2,
-    title: "Project Two",
-    description: "An innovative mobile app designed for seamless user experience.",
-    fullDescription: "This project focuses on creating a mobile application that provides a smooth and engaging user experience, utilizing React Native and Firebase.",
-    image: "/placeholder.svg",
-    screenshots: ["/placeholder.svg", "/placeholder.svg", "/placeholder.svg"],
-    tags: ["React Native", "Firebase", "Node.js"],
-    demoUrl: "https://demo.example.com",
-    githubUrl: "https://github.com/example/project",
-    codeSnippet: `
-// Example React Native component
-const App = () => {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Hello, world!</Text>
-    </View>
-  );
-};
-    `,
-  },
-  {
-    id: 3,
-    title: "Project Three",
-    description: "A powerful backend system built with modern technologies.",
-    fullDescription: "This project demonstrates a robust backend system using Python and PostgreSQL, focusing on API development and database management.",
-    image: "/placeholder.svg",
-    screenshots: ["/placeholder.svg", "/placeholder.svg", "/placeholder.svg"],
-    tags: ["Python", "PostgreSQL", "Docker"],
-    demoUrl: "https://demo.example.com",
-    githubUrl: "https://github.com/example/project",
-    codeSnippet: `
-// Example Python Flask route
-@app.route('/api/data', methods=['GET'])
-def get_data():
-    return jsonify({"data": "Hello, World!"})
-    `,
-  },
-];
+interface TechStack {
+  frontend?: string[];
+  tools?: string[];
+  [key: string]: string[] | undefined;
+}
+
+interface Screenshot {
+  url: string;
+  caption: string;
+}
+
+interface CodeExample {
+  title: string;
+  code: string;
+  language: string;
+}
+
+interface Project {
+  id: number;
+  title: string;
+  description: string;
+  longDescription: string;
+  image: string;
+  tags: string[];
+  features: string[];
+  githubUrl?: string;
+  liveUrl?: string;
+  techStack: TechStack;
+  screenshots: Screenshot[];
+  codeExamples: CodeExample[];
+  installation: string[];
+  usage: string[];
+  challenges: string[];
+  learnings: string[];
+}
 
 const ProjectDetails = () => {
   const { id } = useParams();
   const project = projects.find((p) => p.id === Number(id));
 
   if (!project) {
-    return <div>Project not found</div>;
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold mb-4">Project not found</h1>
+          <Link to="/" className="text-primary hover:underline">
+            Back to Home
+          </Link>
+        </div>
+      </div>
+    );
   }
 
   return (
-    <div className="min-h-screen bg-background">
-      <Navbar />
-      <main className="container mx-auto px-6 py-20">
+    <div className="min-h-screen py-20">
+      <div className="container mx-auto px-6">
+        <Link
+          to="/"
+          className="inline-flex items-center gap-2 text-primary hover:underline mb-8"
+        >
+          <ArrowLeft size={20} />
+          Back to Projects
+        </Link>
+
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <Link
-            to="/"
-            className="inline-flex items-center gap-2 text-foreground/60 hover:text-foreground mb-8"
-          >
-            <ArrowLeft size={20} />
-            Back to Projects
-          </Link>
-
-          <h1 className="text-4xl font-bold mb-4">{project.title}</h1>
-          <p className="text-foreground/70 text-lg mb-8">{project.fullDescription}</p>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-            {project.screenshots.map((screenshot, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-              >
-                <img
-                  src={screenshot}
-                  alt={`${project.title} screenshot ${index + 1}`}
-                  className="rounded-lg shadow-lg w-full"
-                />
-              </motion.div>
-            ))}
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-            <Card className="p-6">
-              <h2 className="text-2xl font-semibold mb-4">Technologies Used</h2>
-              <div className="flex flex-wrap gap-2">
+          {/* Project Header */}
+          <div className="mb-12">
+            <h1 className="text-4xl md:text-5xl font-bold mb-4">{project.title}</h1>
+            <p className="text-xl text-foreground/70 mb-6">{project.description}</p>
+            <div className="flex flex-wrap gap-2 mb-6">
                 {project.tags.map((tag) => (
                   <span
                     key={tag}
@@ -126,44 +87,200 @@ const ProjectDetails = () => {
                     {tag}
                   </span>
                 ))}
+                {project.liveUrl && (
+                  <a
+                    href={project.liveUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-3 py-1 rounded-full bg-primary/20 text-primary text-sm hover:bg-primary/30 transition-colors flex items-center gap-1"
+                  >
+                    Live Demo <ExternalLink size={14} />
+                  </a>
+                )}
               </div>
-            </Card>
-
-            <Card className="p-6">
-              <h2 className="text-2xl font-semibold mb-4">Sample Code</h2>
-              <pre className="bg-muted p-4 rounded-lg overflow-x-auto">
-                <code>{project.codeSnippet}</code>
-              </pre>
-            </Card>
+            <div className="flex gap-4">
+              {project.githubUrl && (
+                <a
+                  href={project.githubUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 text-primary hover:underline"
+                >
+                  <Github size={20} />
+                  View Source
+                </a>
+              )}
+             
+            </div>
           </div>
 
-          <div className="flex flex-wrap gap-4">
-            <Button asChild>
-              <a
-                href={project.demoUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2"
-              >
-                <ExternalLink size={20} />
-                Live Demo
-              </a>
-            </Button>
-            <Button variant="outline" asChild>
-              <a
-                href={project.githubUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2"
-              >
-                <Github size={20} />
-                Source Code
-              </a>
-            </Button>
+          {/* Main Project Image */}
+          <div className="mb-12 rounded-2xl overflow-hidden bg-card">
+            <img
+              src={project.image}
+              alt={project.title}
+              className="w-full h-auto object-cover"
+            />
+          </div>
+
+          {/* Project Content */}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+            {/* Main Content */}
+            <div className="lg:col-span-2 space-y-12">
+              {/* Overview Section */}
+              <section>
+                <h2 className="text-2xl font-bold mb-4 flex items-center gap-2">
+                  <BookOpen size={24} />
+                  Overview
+                </h2>
+                <p className="text-foreground/70 leading-relaxed">
+                  {project.longDescription}
+                </p>
+              </section>
+
+              {/* Screenshots Section */}
+              {project.screenshots && (
+                <section>
+                  <h2 className="text-2xl font-bold mb-6">Screenshots</h2>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {project.screenshots.map((screenshot, index) => (
+                      <div key={index} className="space-y-2">
+                        <div className="rounded-lg overflow-hidden bg-card">
+                          <img
+                            src={screenshot.url}
+                            alt={screenshot.caption}
+                            className="w-full h-auto"
+                          />
+                        </div>
+                        <p className="text-sm text-foreground/70 text-center">
+                          {screenshot.caption}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                </section>
+              )}
+
+              {/* Code Examples Section */}
+              {project.codeExamples && (
+                <section>
+                  <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
+                    <Code size={24} />
+                    Code Examples
+                  </h2>
+                  <div className="space-y-6">
+                    {project.codeExamples.map((example, index) => (
+                      <div key={index} className="space-y-2">
+                        <h3 className="text-lg font-semibold">{example.title}</h3>
+                        <div className="rounded-lg overflow-hidden">
+                          <SyntaxHighlighter
+                            language={example.language}
+                            style={vscDarkPlus}
+                            className="!bg-card !p-4"
+                          >
+                            {example.code}
+                          </SyntaxHighlighter>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </section>
+              )}
+
+              {/* Installation & Usage */}
+              {(project.installation || project.usage) && (
+                <section className="grid md:grid-cols-2 gap-8">
+                  {project.installation && (
+                    <div>
+                      <h2 className="text-2xl font-bold mb-4">Installation</h2>
+                      <ol className="list-decimal list-inside space-y-2 text-foreground/70">
+                        {project.installation.map((step, index) => (
+                          <li key={index}>{step}</li>
+                        ))}
+                      </ol>
+                    </div>
+                  )}
+                  {project.usage && (
+                    <div>
+                      <h2 className="text-2xl font-bold mb-4">Usage</h2>
+                      <ol className="list-decimal list-inside space-y-2 text-foreground/70">
+                        {project.usage.map((step, index) => (
+                          <li key={index}>{step}</li>
+                        ))}
+                      </ol>
+                    </div>
+                  )}
+                </section>
+              )}
+            </div>
+
+            {/* Sidebar */}
+            <div className="space-y-8">
+              {/* Tech Stack */}
+              <section>
+                <h2 className="text-2xl font-bold mb-4 flex items-center gap-2">
+                  <Wrench size={24} />
+                  Tech Stack
+                </h2>
+                {project.techStack && (
+                  <div className="space-y-4">
+                    {Object.entries(project.techStack).map(([category, technologies]) => (
+                      <div key={category}>
+                        <h3 className="text-lg font-semibold mb-2 capitalize">
+                          {category}
+                        </h3>
+                        <ul className="list-disc list-inside text-foreground/70">
+                          {technologies.map((tech) => (
+                            <li key={tech}>{tech}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </section>
+
+              {/* Key Features */}
+              <section>
+                <h2 className="text-2xl font-bold mb-4">Key Features</h2>
+                <ul className="list-disc list-inside space-y-2">
+                  {project.features.map((feature) => (
+                    <li key={feature} className="text-foreground/70">
+                      {feature}
+                    </li>
+                  ))}
+                </ul>
+              </section>
+
+              {/* Challenges & Learnings */}
+              {(project.challenges || project.learnings) && (
+                <section className="space-y-6">
+                  {project.challenges && (
+                    <div>
+                      <h2 className="text-2xl font-bold mb-4">Challenges</h2>
+                      <ul className="list-disc list-inside space-y-2 text-foreground/70">
+                        {project.challenges.map((challenge, index) => (
+                          <li key={index}>{challenge}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                  {project.learnings && (
+                    <div>
+                      <h2 className="text-2xl font-bold mb-4">Key Learnings</h2>
+                      <ul className="list-disc list-inside space-y-2 text-foreground/70">
+                        {project.learnings.map((learning, index) => (
+                          <li key={index}>{learning}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </section>
+              )}
+            </div>
           </div>
         </motion.div>
-      </main>
-      <Footer />
+      </div>
     </div>
   );
 };
