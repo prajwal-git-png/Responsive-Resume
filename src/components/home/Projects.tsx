@@ -1,4 +1,3 @@
-import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { ArrowUpRight } from "lucide-react";
 import { memo } from "react";
@@ -567,113 +566,17 @@ class TodoList {
 }`
       }
     ]
-  },
-  {
-    id: 6,
-    title: "Coming Soon",
-    description: "A new  project is in development.",
-    image: "/images/Project five/img1.png",
-    tags: [],
-    features: [
-      "Project under development",
-      "Innovative technologies",
-      "Modern architecture",
-      "Cutting-edge features"
-    ],
-    longDescription: "An  new project that comming soon.",
-    techStack: {
-      frontend: ["Next.js", "TailwindCSS"],
-      backend: ["Node.js", "GraphQL"],
-      cloud: ["AWS", "Docker"],
-      ai: ["TensorFlow", "PyTorch"]
-    },
-    screenshots: [
-      {
-        url: "/images/Project five/img1.png",
-        caption: "Project Preview"
-      }
-    ],
-    installation: [
-      "Project is currently under development",
-      "Stay tuned for updates",
-      "Coming soon..."
-    ],
-    usage: [
-      "Project features will be announced soon",
-      "Follow for updates",
-      "Join the waiting list"
-    ],
-    challenges: [
-      "Pushing the boundaries of modern web development",
-      "Integrating cutting-edge AI capabilities",
-      "Building scalable cloud infrastructure",
-      "Creating intuitive user experiences"
-    ],
-    learnings: [
-      "Latest web development trends",
-      "Advanced AI/ML implementations",
-      "Cloud architecture best practices",
-      "Modern UI/UX principles"
-    ],
-    codeExamples: [
-      {
-        title: "Project Structure",
-        language: "typescript",
-        code: `
-// Coming Soon
-// Project structure will be revealed
-// Stay tuned for updates...
-
-interface FutureProject {
-  innovation: boolean;
-  excitement: number;
-  comingSoon: Date;
-}`
-      }
-    ]
   }
-];
+].filter(project => project.id !== 6);
 
 const Projects = () => {
   return (
     <section 
       id="projects" 
-      className="relative py-20 pt-28 min-h-screen scroll-mt-20"
+      className="relative py-20 pt-28 min-h-screen scroll-mt-20 bg-background"
     >
-      {/* Gradient background container */}
-      <div className="gradient-bg absolute inset-0 z-0 will-change-transform">
-        <svg xmlns="http://www.w3.org/2000/svg" className="hidden">
-          <defs>
-            <filter id="goo">
-              <feGaussianBlur in="SourceGraphic" stdDeviation="8" result="blur" />
-              <feColorMatrix 
-                in="blur" 
-                mode="matrix" 
-                values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 15 -6" 
-                result="goo" 
-              />
-              <feBlend in="SourceGraphic" in2="goo" />
-            </filter>
-          </defs>
-        </svg>
-        <div className="gradients-container opacity-50">
-          <div className="g1 translate-z-0"></div>
-          <div className="g2 translate-z-0"></div>
-          <div className="g3 translate-z-0"></div>
-          <div className="g4 translate-z-0"></div>
-          <div className="g5 translate-z-0"></div>
-          <div className="interactive translate-z-0"></div>
-        </div>
-      </div>
-
-      {/* Content container */}
       <div className="container mx-auto px-6 relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          viewport={{ once: true }}
-        >
+        <div>
           <h2 className="text-3xl md:text-4xl font-bold mb-8 text-center text-white">
             My Projects
           </h2>
@@ -682,7 +585,7 @@ const Projects = () => {
               <ProjectCard key={project.id} project={project} index={index} />
             ))}
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );
@@ -690,49 +593,15 @@ const Projects = () => {
 
 const ProjectCard = memo(({
   project,
-  index,
 }: {
   project: typeof projects[0];
   index: number;
-}) => (
-  <motion.div
-    initial={{ opacity: 0, y: 20 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    transition={{ duration: 0.5, delay: Math.min(index * 0.1, 0.3) }}
-    viewport={{ once: true, margin: "-50px" }}
-    className={`group relative overflow-hidden cursor-pointer border border-white/20 rounded-2xl will-change-transform
-      ${project.id === 6 
-        ? 'bg-gradient-to-br from-primary/20 via-primary/10 to-background backdrop-blur-xl' 
-        : 'bg-white/10 backdrop-blur-lg'}`}
-  >
-    <Link to={project.id === 6 ? '#' : `/project/${project.id}`} className="block">
-      {project.id === 6 ? (
-        <div className="aspect-video relative overflow-hidden group">
-          <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-accent/20 to-background">
-            <div className="absolute inset-0 bg-grid-white/10 bg-grid-16" />
-            <div className="absolute inset-0 bg-gradient-to-br from-primary/30 via-transparent to-background animate-pulse" />
-          </div>
-          <div className="absolute inset-0 flex flex-col items-center justify-center p-6 backdrop-blur-sm">
-            <div className="text-center transform transition-all duration-500 group-hover:scale-105">
-              <div className="relative inline-block mb-4">
-                <div className="absolute inset-0 animate-ping bg-primary/20 rounded-full" />
-                <div className="relative z-10 w-16 h-16 rounded-full border-2 border-primary/50 flex items-center justify-center">
-                  <div className="w-12 h-12 rounded-full bg-primary/20 animate-pulse" />
-                </div>
-              </div>
-              <h3 className="text-3xl font-bold text-white mb-3 relative">
-                Coming Soon
-                <span className="absolute -top-1 -right-2 text-xs bg-primary/20 px-2 py-1 rounded-full animate-bounce">
-                  New
-                </span>
-              </h3>
-              <p className="text-white/70 max-w-[250px] mx-auto leading-relaxed">
-                Something exciting is brewing !
-              </p>
-            </div>
-          </div>
-        </div>
-      ) : (
+}) => {
+  return (
+    <div
+      className="group relative overflow-hidden cursor-pointer border border-white/20 rounded-2xl bg-white/10"
+    >
+      <Link to={`/project/${project.id}`} className="block">
         <div className="aspect-video relative bg-white/5">
           <img
             src={project.image}
@@ -742,32 +611,30 @@ const ProjectCard = memo(({
             className="w-full h-full object-cover absolute inset-0"
           />
         </div>
-      )}
-      <div className="p-6">
-        <h3 className="text-xl font-semibold mb-2 group-hover:text-primary transition-colors">
-          {project.title}
-        </h3>
-        <p className="text-foreground/70 mb-4">{project.description}</p>
-        <div className="flex flex-wrap gap-2 mb-4">
-          {project.tags.map((tag) => (
-            <span
-              key={tag}
-              className="text-xs px-3 py-1 rounded-full bg-primary/10 text-primary"
-            >
-              {tag}
-            </span>
-          ))}
-        </div>
-        {project.id !== 6 && (
+        <div className="p-6">
+          <h3 className="text-xl font-semibold mb-2 group-hover:text-primary transition-colors">
+            {project.title}
+          </h3>
+          <p className="text-foreground/70 mb-4">{project.description}</p>
+          <div className="flex flex-wrap gap-2 mb-4">
+            {project.tags.map((tag) => (
+              <span
+                key={tag}
+                className="text-xs px-3 py-1 rounded-full bg-primary/10 text-primary"
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
           <span className="inline-flex items-center gap-2 text-primary group-hover:underline">
             View Details
             <ArrowUpRight size={16} />
           </span>
-        )}
-      </div>
-    </Link>
-  </motion.div>
-));
+        </div>
+      </Link>
+    </div>
+  );
+});
 
 ProjectCard.displayName = "ProjectCard";
 

@@ -15,8 +15,11 @@ export const MagneticText = ({
   const boundingRef = useRef<DOMRect | null>(null);
   const animationRef = useRef<any>(null);
   const [gsap, setGsap] = useState<any>(null);
+  const isMobile = useRef(typeof window !== 'undefined' && window.innerWidth < 768);
 
   useEffect(() => {
+    if (isMobile.current) return; // Don't load GSAP on mobile
+
     // Dynamically import GSAP
     import('gsap').then((gsapModule) => {
       setGsap(gsapModule.default);
@@ -24,7 +27,7 @@ export const MagneticText = ({
   }, []);
   
   useEffect(() => {
-    if (!gsap) return; // Wait for GSAP to be loaded
+    if (!gsap || isMobile.current) return; // Skip all effects on mobile
 
     const text = textRef.current;
     if (!text) return;
@@ -107,6 +110,15 @@ export const MagneticText = ({
       }
     };
   }, [gsap, magneticStrength]);
+
+  // On mobile, render without magnetic effect
+  if (isMobile.current) {
+    return (
+      <div className={`inline-block ${className}`}>
+        {children}
+      </div>
+    );
+  }
 
   return (
     <div 

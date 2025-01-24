@@ -1,146 +1,68 @@
-import { useEffect, useRef } from 'react';
-import { motion, useMotionValue, useSpring, useTransform, animate } from 'framer-motion';
-
 export const GradientOrbs = () => {
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-  const isHovering = useMotionValue(false);
-  const hue1 = useMotionValue(0);
-  const hue2 = useMotionValue(180);
-
-  // Faster following effect
-  const springConfig = { damping: 50, stiffness: 100, mass: 1 };
-  const followX = useSpring(mouseX, springConfig);
-  const followY = useSpring(mouseY, springConfig);
-
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      const rect = document.getElementById('hero-section')?.getBoundingClientRect();
-      if (!rect) return;
-      
-      if (e.clientY <= rect.bottom) {
-        isHovering.set(true);
-        // Adjust the divisor to make the orb follow more closely
-        mouseX.set((e.clientX - rect.left) / 2);
-        mouseY.set((e.clientY - rect.top) / 2);
-      } else {
-        isHovering.set(false);
-      }
-    };
-
-    const handleMouseLeave = () => {
-      isHovering.set(false);
-    };
-
-    // Animate hue rotation
-    const rotateHues = async () => {
-      while (true) {
-        await animate(hue1, 360, {
-          duration: 10,
-          ease: "linear",
-        });
-        hue1.set(0);
-        
-        await animate(hue2, 540, {
-          duration: 10,
-          ease: "linear",
-        });
-        hue2.set(180);
-      }
-    };
-
-    rotateHues();
-    window.addEventListener('mousemove', handleMouseMove);
-    window.addEventListener('mouseleave', handleMouseLeave);
-    
-    return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('mouseleave', handleMouseLeave);
-    };
-  }, []);
-
   return (
-    <div className="absolute inset-0 overflow-hidden">
-      {/* Amoeba-like static orb */}
-      <motion.div
-        className="absolute top-[10%] left-[10%] w-[600px] h-[600px]"
-        animate={{
-          scale: [1, 1.2, 0.9, 1.1, 1],
-          x: [0, 50, -30, 20, 0],
-          y: [0, 30, -40, 25, 0],
-          rotate: [0, 20, -10, 15, 0],
-        }}
-        transition={{
-          duration: 15,
-          repeat: Infinity,
-          ease: "linear",
-        }}
+    <div className="absolute inset-0 overflow-hidden pointer-events-none select-none bg-background">
+      {/* Grid pattern */}
+      <div 
+        className="absolute inset-0 opacity-[0.07]"
         style={{
-          background: useTransform(
-            hue1,
-            (value) => `radial-gradient(circle at 30% 40%, 
-              hsl(${value}, 100%, 70%), 
-              hsl(${value + 60}, 100%, 50%), 
-              transparent 70%)`
-          ),
-          filter: 'blur(60px)',
-          opacity: 0.4,
-          mixBlendMode: 'screen',
+          backgroundImage: `
+            linear-gradient(to right, hsl(var(--muted-foreground)) 1px, transparent 1px),
+            linear-gradient(to bottom, hsl(var(--muted-foreground)) 1px, transparent 1px)
+          `,
+          backgroundSize: '60px 60px',
         }}
       />
 
-      {/* Cursor following orb */}
-      <motion.div
-        className="absolute top-[15%] right-[15%] w-[500px] h-[500px]"
-        style={{
-          background: useTransform(
-            hue2,
-            (value) => `radial-gradient(circle at center, 
-              hsl(${value}, 100%, 70%), 
-              hsl(${value + 60}, 100%, 50%), 
-              transparent 70%)`
-          ),
-          filter: 'blur(50px)',
-          opacity: 0.3,
-          mixBlendMode: 'screen',
-          x: followX,
-          y: followY,
-        }}
-        animate={{
-          scale: [1, 1.1, 1],
-        }}
-        transition={{
-          duration: 5,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-      />
+      {/* Radial gradient overlay */}
+      <div className="absolute inset-0 bg-gradient-radial from-transparent via-transparent to-background/90" />
 
-      {/* Additional smaller orbs for more color variety */}
-      <motion.div
-        className="absolute top-[25%] left-[30%] w-[300px] h-[300px]"
-        style={{
-          background: useTransform(
-            hue1,
-            (value) => `radial-gradient(circle at center, 
-              hsl(${value + 120}, 100%, 70%), 
-              transparent 70%)`
-          ),
-          filter: 'blur(40px)',
-          opacity: 0.2,
-          mixBlendMode: 'screen',
-        }}
-        animate={{
-          scale: [1, 1.3, 1],
-          x: [0, 30, 0],
-          y: [0, -20, 0],
-        }}
-        transition={{
-          duration: 7,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-      />
+      {/* Ethereal light sources */}
+      <div className="absolute inset-0">
+        {/* First light source */}
+        <div className="absolute -right-1/4 top-0 w-[70vh] h-[70vh]">
+          <div className="absolute inset-0 animate-glow-slow">
+            <div className="absolute inset-0 rounded-full animate-hue-rotate">
+              <div className="absolute inset-0 rounded-full bg-gradient-to-r from-primary/30 via-purple-500/30 to-blue-500/30 blur-[120px]" />
+              <div className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-500/20 via-primary/20 to-purple-500/20 blur-[150px]" />
+            </div>
+          </div>
+        </div>
+
+        {/* Second light source */}
+        <div className="absolute -left-1/4 bottom-0 w-[70vh] h-[70vh]">
+          <div className="absolute inset-0 animate-glow-slow-delayed">
+            <div className="absolute inset-0 rounded-full animate-hue-rotate-reverse">
+              <div className="absolute inset-0 rounded-full bg-gradient-to-r from-accent/30 via-pink-500/30 to-purple-500/30 blur-[120px]" />
+              <div className="absolute inset-0 rounded-full bg-gradient-to-r from-purple-500/20 via-accent/20 to-pink-500/20 blur-[150px]" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Enhanced scanner lines */}
+      <div className="absolute inset-0">
+        {/* Horizontal scanner lines */}
+        <div className="absolute inset-x-0 top-1/4 h-[1px] animate-scan-slow">
+          <div className="h-full w-1/3 mx-auto bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
+        </div>
+        <div className="absolute inset-x-0 top-2/4 h-[1px] animate-scan-slow-delayed">
+          <div className="h-full w-1/3 mx-auto bg-gradient-to-r from-transparent via-accent/20 to-transparent" />
+        </div>
+        <div className="absolute inset-x-0 top-3/4 h-[1px] animate-scan-slow-reverse">
+          <div className="h-full w-1/3 mx-auto bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
+        </div>
+
+        {/* Vertical scanner lines */}
+        <div className="absolute inset-y-0 w-[1px] left-1/4 animate-scan-vertical">
+          <div className="w-full h-1/3 my-auto bg-gradient-to-b from-transparent via-accent/20 to-transparent" />
+        </div>
+        <div className="absolute inset-y-0 w-[1px] right-1/4 animate-scan-vertical-delayed">
+          <div className="w-full h-1/3 my-auto bg-gradient-to-b from-transparent via-primary/20 to-transparent" />
+        </div>
+      </div>
+
+      {/* Additional color transition layer */}
+      <div className="absolute inset-0 bg-gradient-to-br from-background/0 via-primary/5 to-accent/5 animate-gradient opacity-50" />
     </div>
   );
 }; 
