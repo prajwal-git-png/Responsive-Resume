@@ -171,9 +171,8 @@ const About = () => {
                 </p>
                 <p className="text-lg text-muted-foreground leading-relaxed about-text font-light tracking-wide">
                 Welcome! I'm Prajwal RM.
-
-With a strong foundation in programming and web development, I specialize in creating interactive and user-friendly web applications. My journey into the tech world began with a fascination for AI and Machine Learning, and over time, I have expanded my skills across a variety of technologies, including Python, Java, and web development. I'm passionate about building innovative solutions and continuously learning to keep up with the evolving tech landscape.
-                </p>
+                I have a good understanding of programming and web development for creating interactive and user friendly web applications.  I began my tech journey from an interest in how things work and over time acquired skills in Python,  Java and web development. I have also, at the same time, experimented with different AI tools to  make work easier and more efficient. I like building things, solving problems and keeping on top of new  tech as it emerges.
+                 </p>
               </div>
             </div>
 

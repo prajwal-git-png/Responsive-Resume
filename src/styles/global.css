@@ -54,6 +54,9 @@
 
   html {
     @apply bg-background transition-colors duration-300;
+    @media (min-width: 768px) and (hover: hover) {
+      cursor: none;
+    }
   }
 
   body {
@@ -65,18 +68,35 @@
     @apply font-heading;
   }
 
-  /* Restore cursor for interactive elements */
-  button, a, input, textarea, select, [role="button"] {
-    cursor: none !important;
-  }
-
-  /* Hide cursor on touch devices */
-  @media (hover: none) and (pointer: coarse) {
+  /* Hide cursor and custom cursor styles on mobile/touch devices */
+  @media (hover: none) and (pointer: coarse), (max-width: 767px) {
     * {
       cursor: auto !important;
     }
-    .custom-cursor {
+    .custom-cursor, .mouse-circle {
       display: none !important;
+      opacity: 0 !important;
+      visibility: hidden !important;
+    }
+  }
+
+  /* Only show custom cursor on desktop */
+  @media (min-width: 768px) and (hover: hover) {
+    .mouse-circle {
+      pointer-events: none;
+      mix-blend-mode: difference;
+      will-change: transform;
+      transform: translate(-50%, -50%) scale(0);
+    }
+  }
+
+  /* Restore cursor for interactive elements */
+  button, a, input, textarea, select, [role="button"] {
+    @media (min-width: 768px) and (hover: hover) {
+      cursor: none !important;
+    }
+    @media (max-width: 767px), (hover: none) {
+      cursor: pointer !important;
     }
   }
 }
@@ -90,6 +110,16 @@
   .text-stroke {
     -webkit-text-stroke: 1px hsl(var(--primary));
     color: transparent;
+  }
+
+  /* Grid background pattern */
+  .bg-grid-white\/10 {
+    background-image: linear-gradient(to right, rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+                      linear-gradient(to bottom, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+  }
+  
+  .bg-grid-16 {
+    background-size: 16px 16px;
   }
 
   .hover-line {

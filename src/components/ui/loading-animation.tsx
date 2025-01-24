@@ -3,19 +3,29 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useTheme } from 'next-themes';
 
 export const LoadingAnimation = () => {
+  // Set initial loading state to true and prevent hydration mismatch
+  const [mounted, setMounted] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [currentNumber, setCurrentNumber] = useState(0);
   const [displayNumber, setDisplayNumber] = useState(0);
   const { theme } = useTheme();
-  const numbers = [0, 20, 40, 60, 80, 100];
+  const numbers = [0, 15, 35, 60, 85, 100];
   
-  // Theme-based colors
-  const primaryColor = theme === 'dark' ? '#ff4800' : '#ff6b00';
-  const secondaryColor = theme === 'dark' ? '#ff7e00' : '#ff9500';
-  const bgColor = theme === 'dark' ? 'rgba(0, 0, 0, 0.97)' : 'rgba(255, 255, 255, 0.97)';
-  const textColor = theme === 'dark' ? 'rgba(255, 255, 255, 0.9)' : 'rgba(0, 0, 0, 0.9)';
+  // Modern color palette
+  const primaryColor = theme === 'dark' ? '#6366f1' : '#4f46e5'; // Indigo
+  const secondaryColor = theme === 'dark' ? '#ec4899' : '#db2777'; // Pink
+  const accentColor = theme === 'dark' ? '#8b5cf6' : '#7c3aed'; // Purple
+  const bgColor = theme === 'dark' ? '#000000' : '#ffffff'; // Black/White
+  const textColor = theme === 'dark' ? '#ffffff' : '#0f172a'; // White/Slate
   
+  // Handle mounting to prevent hydration mismatch
   useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (!mounted) return;
+    
     let currentIndex = 0;
     const interval = setInterval(() => {
       if (currentIndex < numbers.length - 1) {
@@ -23,16 +33,18 @@ export const LoadingAnimation = () => {
         setCurrentNumber(numbers[currentIndex]);
       } else {
         clearInterval(interval);
-        setTimeout(() => setIsLoading(false), 500);
+        setTimeout(() => setIsLoading(false), 300);
       }
-    }, 800);
+    }, 500);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [mounted]);
 
   useEffect(() => {
-    const duration = 800;
-    const steps = 60;
+    if (!mounted) return;
+    
+    const duration = 500;
+    const steps = 30;
     const stepDuration = duration / steps;
     const increment = (currentNumber - displayNumber) / steps;
     
@@ -50,235 +62,168 @@ export const LoadingAnimation = () => {
       
       return () => clearInterval(timer);
     }
-  }, [currentNumber, displayNumber]);
+  }, [currentNumber, displayNumber, mounted]);
+
+  // Don't render anything until mounted
+  if (!mounted) {
+    return (
+      <div 
+        className="fixed inset-0 z-[99999]" 
+        style={{ background: bgColor }}
+      />
+    );
+  }
 
   return (
-    <AnimatePresence>
+    <AnimatePresence mode="wait">
       {isLoading && (
         <motion.div
-          className="fixed inset-0 z-[9999] flex items-center justify-center overflow-hidden"
+          className="fixed inset-0 z-[99999] flex items-center justify-center"
           style={{ background: bgColor }}
-          initial={{ opacity: 0 }}
+          initial={{ opacity: 1 }}
           animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1] }}
+          exit={{ opacity: 0, transition: { duration: 0.4 } }}
+          transition={{ duration: 0.6, ease: [0.76, 0, 0.24, 1] }}
         >
-          {/* Breathing background effect */}
-          <motion.div
-            className="absolute inset-0"
-            animate={{
-              background: [
-                `radial-gradient(circle at 50% 50%, ${primaryColor} 0%, transparent 60%)`,
-                `radial-gradient(circle at 50% 50%, ${primaryColor} 0%, transparent 30%)`,
-                `radial-gradient(circle at 50% 50%, ${primaryColor} 0%, transparent 60%)`,
-              ],
-            }}
-            transition={{
-              duration: 3,
-              ease: "easeInOut",
-              repeat: Infinity,
-              repeatType: "reverse",
-            }}
-            style={{ opacity: theme === 'dark' ? 0.15 : 0.1 }}
-          />
-
-          {/* Pulsing rings */}
-          {[...Array(3)].map((_, i) => (
+          {/* Morphing background shapes */}
+          <div className="absolute inset-0 overflow-hidden">
             <motion.div
-              key={i}
-              className="absolute left-1/2 top-1/2 border"
+              className="absolute w-[800px] h-[800px] blur-3xl"
               style={{
-                width: 1000 - i * 200,
-                height: 1000 - i * 200,
-                borderRadius: '50%',
-                x: '-50%',
-                y: '-50%',
-                borderColor: theme === 'dark' ? 'rgba(255, 72, 0, 0.2)' : 'rgba(255, 107, 0, 0.15)',
+                background: `linear-gradient(45deg, ${primaryColor}30, ${secondaryColor}30)`,
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
               }}
               animate={{
                 scale: [1, 1.2, 1],
-                opacity: theme === 'dark' ? [0.1, 0.3, 0.1] : [0.05, 0.2, 0.05],
+                rotate: [0, 90, 0],
+                borderRadius: ['30% 70% 70% 30% / 30% 30% 70% 70%', '50% 50% 50% 50%', '30% 70% 70% 30% / 30% 30% 70% 70%'],
               }}
               transition={{
-                duration: 3,
+                duration: 8,
                 ease: "easeInOut",
-                delay: i * 0.3,
                 repeat: Infinity,
-                repeatType: "reverse",
               }}
             />
-          ))}
+          </div>
 
-          {/* Center animation */}
-          <div className="relative">
+          {/* Center content container */}
+          <div className="relative max-w-[90vw] w-full md:w-[500px] aspect-square flex items-center justify-center">
+            {/* Rotating border */}
             <motion.div
-              className="relative w-[500px] h-[500px]"
+              className="absolute inset-0"
+              style={{
+                border: `2px solid ${primaryColor}15`,
+                borderRadius: '30% 70% 70% 30% / 30% 30% 70% 70%',
+              }}
               animate={{
                 rotate: 360,
+                scale: [0.8, 1, 0.8],
+                borderRadius: ['30% 70% 70% 30% / 30% 30% 70% 70%', '50% 50% 50% 50%', '30% 70% 70% 30% / 30% 30% 70% 70%'],
               }}
               transition={{
-                duration: 20,
+                duration: 8,
                 ease: "linear",
                 repeat: Infinity,
               }}
-            >
-              {[...Array(4)].map((_, i) => (
+            />
+
+            {/* Content */}
+            <div className="relative z-10 text-center">
+              {/* Loading text */}
+              <motion.div
+                className="overflow-hidden"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.2 }}
+              >
                 <motion.div
-                  key={i}
-                  className="absolute inset-0"
-                  style={{
-                    border: '1px solid rgba(255, 72, 0, 0.3)',
-                    borderRadius: '40%',
-                  }}
-                />
-              ))}
-            </motion.div>
+                  className="text-sm sm:text-base uppercase tracking-[0.2em] font-light"
+                  style={{ color: textColor }}
+                  animate={{ opacity: [0.6, 1, 0.6] }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                >
+                 Welcome to my portfolio
+                </motion.div>
+              </motion.div>
+
+              {/* Progress number */}
+              <motion.div
+                className="mt-6"
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.4, delay: 0.2 }}
+              >
+                <div className="relative flex items-center justify-center">
+                  <motion.span
+                    className="block text-6xl sm:text-7xl font-light"
+                    style={{ color: primaryColor }}
+                    animate={{
+                      opacity: [0.85, 1, 0.85],
+                    }}
+                    transition={{
+                      duration: 1.5,
+                      repeat: Infinity,
+                    }}
+                  >
+                    {Math.round(displayNumber)}
+                  </motion.span>
+                  <motion.span
+                    className="ml-1 text-xl sm:text-2xl"
+                    style={{ color: secondaryColor }}
+                    animate={{
+                      y: [-1, 1, -1],
+                      opacity: [0.85, 1, 0.85],
+                    }}
+                    transition={{
+                      duration: 1.5,
+                      repeat: Infinity,
+                    }}
+                  >
+                    %
+                  </motion.span>
+                </div>
+              </motion.div>
+            </div>
           </div>
 
-          {/* Welcome text */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center">
-            <motion.div
-              className="text-xl tracking-[0.3em] uppercase font-['Great_Vibes']"
-              style={{
-                color: textColor,
-                textShadow: theme === 'dark' 
-                  ? '0 0 20px rgba(255, 72, 0, 0.4)'
-                  : '0 0 20px rgba(255, 107, 0, 0.3)',
-                WebkitTextStroke: theme === 'dark'
-                  ? '0.2px rgba(255, 72, 0, 0.3)'
-                  : '0.2px rgba(255, 107, 0, 0.2)',
-              }}
-              animate={{
-                opacity: [0.7, 1, 0.7],
-                scale: [0.98, 1.02, 0.98],
-                rotate: [-2, 2, -2],
-              }}
-              transition={{
-                duration: 3,
-                ease: "easeInOut",
-                repeat: Infinity,
-              }}
-            >
-              Welcome to
-            </motion.div>
-            <motion.div
-              className="mt-2 text-4xl font-['Pinyon_Script']"
-              style={{
-                background: `linear-gradient(45deg, ${primaryColor}, ${secondaryColor})`,
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                textShadow: theme === 'dark'
-                  ? '2px 2px 4px rgba(255, 72, 0, 0.3)'
-                  : '2px 2px 4px rgba(255, 107, 0, 0.2)',
-                filter: theme === 'dark'
-                  ? 'drop-shadow(0 0 10px rgba(255, 72, 0, 0.2))'
-                  : 'drop-shadow(0 0 10px rgba(255, 107, 0, 0.15))',
-              }}
-              animate={{
-                opacity: [0.8, 1, 0.8],
-                scale: [0.97, 1.04, 0.97],
-                rotate: [1, -1, 1],
-              }}
-              transition={{
-                duration: 3,
-                ease: "easeInOut",
-                repeat: Infinity,
-                delay: 0.2,
-              }}
-            >
-              My Portfolio
-            </motion.div>
-          </div>
-
-          {/* Counter */}
-          <div className="fixed bottom-12 right-40 w-[500px]">
-            <motion.div
-              className="relative flex justify-end items-baseline"
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1] }}
-            >
-              <motion.span
-                className="block text-[160px] font-['Allura'] leading-none"
+          {/* Floating elements */}
+          <div className="absolute inset-0 pointer-events-none">
+            {[...Array(15)].map((_, i) => (
+              <motion.div
+                key={i}
+                className="absolute"
                 style={{
-                  background: `linear-gradient(45deg, ${primaryColor}, ${secondaryColor})`,
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent',
-                  textShadow: theme === 'dark'
-                    ? '0 0 40px rgba(255, 72, 0, 0.4)'
-                    : '0 0 40px rgba(255, 107, 0, 0.3)',
-                  WebkitTextStroke: theme === 'dark'
-                    ? '1px rgba(255, 72, 0, 0.1)'
-                    : '1px rgba(255, 107, 0, 0.1)',
-                  filter: theme === 'dark'
-                    ? 'drop-shadow(0 0 15px rgba(255, 72, 0, 0.2))'
-                    : 'drop-shadow(0 0 15px rgba(255, 107, 0, 0.15))',
+                  left: `${Math.random() * 100}%`,
+                  top: `${Math.random() * 100}%`,
+                }}
+                initial={{
+                  scale: 0,
+                  opacity: 0,
                 }}
                 animate={{
-                  scale: [1, 1.02, 1],
-                  opacity: [0.9, 1, 0.9],
-                  rotate: [-1, 1, -1],
+                  scale: [0, 1, 0],
+                  opacity: [0, 0.4, 0],
                 }}
                 transition={{
-                  duration: 2,
-                  ease: "easeInOut",
+                  duration: 3 + Math.random() * 2,
                   repeat: Infinity,
+                  delay: Math.random() * 2,
                 }}
               >
-                {Math.round(displayNumber)}
-              </motion.span>
-              <motion.span
-                className="absolute -right-12 bottom-12 text-3xl font-['Great_Vibes']"
-                style={{
-                  color: textColor,
-                  textShadow: theme === 'dark'
-                    ? '2px 2px 4px rgba(255, 72, 0, 0.3)'
-                    : '2px 2px 4px rgba(255, 107, 0, 0.2)',
-                }}
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ 
-                  opacity: 1, 
-                  x: 0,
-                  scale: [1, 1.1, 1],
-                  rotate: [0, -3, 0],
-                }}
-                transition={{
-                  opacity: { delay: 0.2 },
-                  scale: {
-                    duration: 2,
-                    ease: "easeInOut",
-                    repeat: Infinity,
-                  }
-                }}
-              >
-                %
-              </motion.span>
-            </motion.div>
+                <div
+                  className="w-2 h-2"
+                  style={{
+                    background: i % 2 === 0 ? `${primaryColor}` : `${secondaryColor}`,
+                    borderRadius: i % 3 === 0 ? '50%' : '0%',
+                    transform: `rotate(${Math.random() * 360}deg)`,
+                    opacity: theme === 'dark' ? 0.4 : 0.3,
+                  }}
+                />
+              </motion.div>
+            ))}
           </div>
-
-          {/* Floating particles */}
-          {[...Array(30)].map((_, i) => (
-            <motion.div
-              key={i}
-              className="absolute w-1 h-1 rounded-full"
-              style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-                background: theme === 'dark' ? 'rgba(255, 72, 0, 0.3)' : 'rgba(255, 107, 0, 0.2)',
-              }}
-              animate={{
-                y: [0, -100, 0],
-                opacity: theme === 'dark' ? [0, 0.8, 0] : [0, 0.6, 0],
-                scale: [0, 1.5, 0],
-              }}
-              transition={{
-                duration: 4 + Math.random() * 2,
-                repeat: Infinity,
-                delay: Math.random() * 2,
-                ease: "easeInOut",
-              }}
-            />
-          ))}
         </motion.div>
       )}
     </AnimatePresence>
