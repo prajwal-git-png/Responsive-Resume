@@ -7,7 +7,7 @@ export const projects = [
     id: 1,
     title: "Address Record Book",
     description: "A web application designed to help users manage and store contact information efficiently with features for adding, editing, deleting, and searching contacts.",
-    image: "/src/images/Project one/img3.png",
+    image: "/images/Project one/img3.png",
     tags: ["HTML", "CSS", "JavaScript"],
     githubUrl: "https://github.com/prajwal-git-png/Address-Record-book",
     liveUrl: "https://prajwal-git-png.github.io/Address-Record-book/",
@@ -25,15 +25,15 @@ export const projects = [
     },
     screenshots: [
       {
-        url: "/src/images/Project one/img3.png",
+        url: "/images/Project one/img3.png",
         caption: "Main Dashboard View"
       },
       {
-        url: "/src/images/Project one/img1.png",
+        url: "/images/Project one/img1.png",
         caption: "Contact Management Interface"
       },
       {
-        url: "/src/images/Project one/img2.png",
+        url: "/images/Project one/img2.png",
         caption: "Search and Filter Functionality"
       }
     ],
@@ -97,7 +97,7 @@ function searchContacts(query) {
     id: 2,
     title: "AI Chatbot College Project",
     description: "A sophisticated AI chatbot built using Flask and Google's Gemini Pro API, featuring a ChatGPT-like interface with email-based authentication and real-time chat capabilities.",
-    image: "/src/images/Project two/img4.png",
+    image: "/images/Project two/img4.png",
     tags: ["Python", "Flask", "Google Gemini Pro", "SQLAlchemy", "HTML/CSS/JS"],
     githubUrl: "https://github.com/prajwal-git-png/Ai-Bot-college-project",
     features: [
@@ -118,19 +118,19 @@ function searchContacts(query) {
     },
     screenshots: [
       {
-        url: "/src/images/Project two/img4.png",
+        url: "/images/Project two/img4.png",
         caption: "Main Chat Interface"
       },
       {
-        url: "/src/images/Project two/img1.png",
+        url: "/images/Project two/img1.png",
         caption: "Authentication Screen"
       },
       {
-        url: "/src/images/Project two/img2.png",
+        url: "/images/Project two/img2.png",
         caption: "Chat Management Features"
       },
       {
-        url: "/src/images/Project two/img3.png",
+        url: "/images/Project two/img3.png",
         caption: "Theme Toggle and Settings"
       }
     ],
@@ -213,7 +213,7 @@ async function sendMessage(message) {
     id: 3,
     title: "Bank Management System",
     description: "A comprehensive Java-based banking application that manages various banking operations including account creation, transactions, and account management.",
-    image: "/src/images/Project three/img3.png",
+    image: "/images/Project three/img3.png",
     tags: ["Java", "MySQL", "JDBC", "Swing"],
     githubUrl: "https://github.com/prajwal-git-png/Resume-analyst",
     features: [
@@ -233,15 +233,15 @@ async function sendMessage(message) {
     },
     screenshots: [
       {
-        url: "/src/images/Project three/img3.png",
+        url: "/images/Project three/img3.png",
         caption: "Main Dashboard Interface"
       },
       {
-        url: "/src/images/Project three/img1.png",
+        url: "/images/Project three/img1.png",
         caption: "Account Creation Form"
       },
       {
-        url: "/src/images/Project three/img2.png",
+        url: "/images/Project three/img2.png",
         caption: "Transaction Interface"
       }
     ],
@@ -320,7 +320,7 @@ public void deposit(String accountNo, double amount) {
     id: 4,
     title: "Resume Analyst",
     description: "A modern web application that analyzes resumes against job requirements using Google's Gemini AI, providing detailed skill matching and scoring.",
-    image: "/src/images/Project four/img1.png",
+    image: "/images/Project four/img1.png",
     tags: ["Python", "Flask", "Google Gemini AI", "SQLite", "HTML/CSS/JS"],
     githubUrl: "https://github.com/prajwal-git-png/Resume-analyst",
     liveUrl: "https://resume-analyst.vercel.app/",
@@ -343,15 +343,15 @@ public void deposit(String accountNo, double amount) {
     },
     screenshots: [
       {
-        url: "/src/images/Project four/img1.png",
+        url: "/images/Project four/img1.png",
         caption: "Main Dashboard with Resume Upload"
       },
       {
-        url: "/src/images/Project four/img2.png",
+        url: "/images/Project four/img2.png",
         caption: "Analysis Results Interface"
       },
       {
-        url: "/src/images/Project four/img3.png",
+        url: "/images/Project four/img3.png",
         caption: "Detailed Skill Matching View"
       }
     ],
@@ -451,7 +451,7 @@ function isValidFileType(file) {
     id: 5,
     title: "Modern Todo List Application",
     description: "A clean, modern, and user-friendly Todo List application built with vanilla JavaScript, featuring a beautiful UI with smooth animations and local storage persistence.",
-    image: "/src/images/Project five/img1.png",
+    image: "/images/Project five/img1.png",
     tags: ["HTML5", "CSS3", "JavaScript", "LocalStorage"],
     features: [
       "Modern and responsive design",
@@ -471,7 +471,7 @@ function isValidFileType(file) {
     },
     screenshots: [
       {
-        url: "/src/images/Project five/img1.png",
+        url: "/images/Project five/img1.png",
         caption: "Main Application Interface"
       }
     ],
@@ -571,7 +571,7 @@ class TodoList {
     id: 6,
     title: "Coming Soon",
     description: "A new  project is in development.",
-    image: "/src/images/Project five/img1.png",
+    image: "/images/Project five/img1.png",
     tags: [],
     features: [
       "Project under development",
@@ -588,7 +588,7 @@ class TodoList {
     },
     screenshots: [
       {
-        url: "/src/images/Project five/img1.png",
+        url: "/images/Project five/img1.png",
         caption: "Project Preview"
       }
     ],
