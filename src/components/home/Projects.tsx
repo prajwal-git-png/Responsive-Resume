@@ -4,6 +4,181 @@ import { memo } from "react";
 
 export const projects = [
   {
+    id: 6,
+    title: "Weather App",
+    description: "A modern, elegant weather application built with React and TypeScript, featuring a beautiful glass-morphic design and real-time weather updates.",
+    image: "/images/Project six/cardimg.png",
+    tags: ["React", "TypeScript", "Tailwind CSS", "OpenWeatherMap API"],
+    githubUrl: "https://github.com/prajwal-git-png/glassy-weather-vista",
+    liveUrl: "https://glassy-weather-vista.vercel.app/",
+    features: [
+      "Real-time Weather Data",
+      "Interactive Map Selection",
+      "Temperature Unit Toggle",
+      "Detailed Weather Information",
+      "5-Day Weather Forecast",
+      "Responsive Design",
+      "Beautiful UI"
+    ],
+    longDescription: "A modern, elegant weather application built with React and TypeScript, featuring a beautiful glass-morphic design and real-time weather updates. The app provides comprehensive weather information including current conditions, forecasts, and interactive map-based location selection.",
+    techStack: {
+      frontend: ["React", "TypeScript", "Tailwind CSS", "Framer Motion"],
+      ui: ["shadcn/ui"],
+      maps: ["React Leaflet"],
+      api: ["OpenWeatherMap API"],
+      deployment: ["Vercel"]
+    },
+    screenshots: [
+      {
+        url: "/images/Project six/cardimg.png",
+        caption: "Main Weather Dashboard with Glass-morphic Design"
+      },
+      {
+        url: "/images/Project six/img2.png",
+        caption: "Interactive Map Selection Interface"
+      },
+      {
+        url: "/images/Project six/img3.png",
+        caption: "5-Day Weather Forecast View"
+      }
+    ],
+    installation: [
+      "Clone the repository: git clone https://github.com/prajwal-git-png/glassy-weather-vista.git",
+      "cd glassy-weather-vista",
+      "Install dependencies: npm install",
+      "Create .env file and add OpenWeatherMap API key",
+      "Start development server: npm run dev"
+    ],
+    usage: [
+      "Select location using the interactive map",
+      "View current weather conditions",
+      "Check 5-day weather forecast",
+      "Toggle between Celsius and Fahrenheit",
+      "View detailed weather information"
+    ],
+    challenges: [
+      "Implementing interactive map integration",
+      "Creating responsive glass-morphic design",
+      "Managing real-time weather data updates",
+      "Optimizing performance for mobile devices",
+      "Handling API rate limits and errors"
+    ],
+    learnings: [
+      "React and TypeScript best practices",
+      "Map integration in web applications",
+      "Glass-morphic UI design principles",
+      "Weather API integration",
+      "Responsive design optimization"
+    ],
+    codeExamples: [
+      {
+        title: "Weather Data Fetching",
+        language: "typescript",
+        code: `
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+
+interface WeatherData {
+  temp: number;
+  humidity: number;
+  windSpeed: number;
+  description: string;
+}
+
+export const useWeatherData = (lat: number, lon: number) => {
+  const [weather, setWeather] = useState<WeatherData | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchWeather = async () => {
+      try {
+        const response = await axios.get(
+          \`https://api.openweathermap.org/data/2.5/weather?\${
+            new URLSearchParams({
+              lat: lat.toString(),
+              lon: lon.toString(),
+              units: 'metric',
+              appid: process.env.NEXT_PUBLIC_OPENWEATHER_API_KEY!
+            })
+          }\`
+        );
+
+        setWeather({
+          temp: response.data.main.temp,
+          humidity: response.data.main.humidity,
+          windSpeed: response.data.wind.speed,
+          description: response.data.weather[0].description
+        });
+        setLoading(false);
+      } catch (err) {
+        setError('Failed to fetch weather data');
+        setLoading(false);
+      }
+    };
+
+    fetchWeather();
+  }, [lat, lon]);
+
+  return { weather, loading, error };
+};`
+      },
+      {
+        title: "Glass-morphic Weather Card Component",
+        language: "typescript",
+        code: `
+import { motion } from 'framer-motion';
+import { Cloud, Droplets, Wind } from 'lucide-react';
+
+interface WeatherCardProps {
+  weather: WeatherData;
+  location: string;
+}
+
+export const WeatherCard = ({ weather, location }: WeatherCardProps) => {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      className="relative backdrop-blur-lg bg-white/10 rounded-3xl p-6 shadow-lg
+                 border border-white/20 overflow-hidden"
+    >
+      {/* Background Gradient */}
+      <div className="absolute inset-0 bg-gradient-to-br from-primary/20 
+                    to-secondary/20 -z-10" />
+      
+      {/* Content */}
+      <div className="space-y-4">
+        <h2 className="text-2xl font-semibold text-white">{location}</h2>
+        
+        <div className="flex items-center justify-between">
+          <div className="text-5xl font-bold text-white">
+            {Math.round(weather.temp)}°C
+          </div>
+          <p className="text-lg text-white/80 capitalize">
+            {weather.description}
+          </p>
+        </div>
+        
+        {/* Weather Details */}
+        <div className="grid grid-cols-2 gap-4 pt-4">
+          <div className="flex items-center gap-2 text-white/80">
+            <Droplets className="w-5 h-5" />
+            <span>{weather.humidity}%</span>
+          </div>
+          <div className="flex items-center gap-2 text-white/80">
+            <Wind className="w-5 h-5" />
+            <span>{weather.windSpeed} m/s</span>
+          </div>
+        </div>
+      </div>
+    </motion.div>
+  );
+};`
+      }
+    ]
+  },
+  {
     id: 1,
     title: "Address Record Book",
     description: "A web application designed to help users manage and store contact information efficiently with features for adding, editing, deleting, and searching contacts.",
@@ -568,7 +743,7 @@ class TodoList {
       }
     ]
   }
-].filter(project => project.id !== 6);
+];
 
 const Projects = () => {
   return (
