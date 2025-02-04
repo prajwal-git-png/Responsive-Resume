@@ -170,9 +170,8 @@ const About = () => {
                   I am glad you are here! Hi, I'm <span className="text-primary font-semibold">Prajwal RM</span>.
                 </p>
                 <p className="text-lg text-muted-foreground leading-relaxed about-text font-light tracking-wide">
-                Welcome! I'm Prajwal RM.
-                I have a good understanding of programming and web development for creating interactive and user friendly web applications.  I began my tech journey from an interest in how things work and over time acquired skills in Python,  Java and web development. I have also, at the same time, experimented with different AI tools to  make work easier and more efficient. I like building things, solving problems and keeping on top of new  tech as it emerges.
-                 </p>
+                I am a passionate software developer with expertise in full-stack web development and a strong foundation in programming languages like Python and Java. Through my academic journey and personal projects, I've developed proficiency in creating responsive, user-centric web applications that deliver exceptional user experiences. My technical skills span both frontend and backend development, complemented by hands-on experience with modern AI tools and technologies. I am driven by a desire to solve complex problems and continuously expand my knowledge in emerging technologies. My commitment to clean code and efficient solutions makes me well-equipped to tackle challenging development projects.
+                </p>
               </div>
             </div>
 
