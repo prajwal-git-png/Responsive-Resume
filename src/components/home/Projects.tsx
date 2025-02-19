@@ -275,7 +275,7 @@ function searchContacts(query) {
     image: "/images/Project two/img4.png",
     tags: ["Python", "Flask", "Google Gemini Pro", "SQLAlchemy", "HTML/CSS/JS"],
     githubUrl: "https://github.com/prajwal-git-png/Ai-Bot-college-project",
-    liveUrl: "https://chat-ai-k18u.vercel.app/",
+    liveUrl: "https://chat-ai-six-plum.vercel.app/",
     features: [
       "AI-powered responses using Google's Gemini Pro API",
       "Secure email-based authentication",
