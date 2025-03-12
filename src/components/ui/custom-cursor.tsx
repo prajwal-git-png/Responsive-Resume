@@ -1,54 +1,48 @@
-import { useEffect, useRef } from 'react';
-import { motion, useMotionValue, useSpring } from 'framer-motion';
+import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 
 export const CustomCursor = () => {
-  const cursorRef = useRef<HTMLDivElement>(null);
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-
-  const springConfig = { damping: 20, stiffness: 200, mass: 0.5 };
-  const cursorX = useSpring(mouseX, springConfig);
-  const cursorY = useSpring(mouseY, springConfig);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [isHovering, setIsHovering] = useState(false);
 
   useEffect(() => {
-    const moveCursor = (e: MouseEvent) => {
-      mouseX.set(e.clientX - 16);
-      mouseY.set(e.clientY - 16);
+    const updateMousePosition = (e: MouseEvent) => {
+      setMousePosition({ x: e.clientX, y: e.clientY });
     };
 
-    window.addEventListener('mousemove', moveCursor);
+    const handleMouseEnter = (e: MouseEvent) => {
+      if ((e.target as HTMLElement).closest('a, button, [role="button"]')) {
+        setIsHovering(true);
+      } else {
+        setIsHovering(false);
+      }
+    };
+
+    window.addEventListener('mousemove', updateMousePosition);
+    document.addEventListener('mouseover', handleMouseEnter);
+
     return () => {
-      window.removeEventListener('mousemove', moveCursor);
+      window.removeEventListener('mousemove', updateMousePosition);
+      document.removeEventListener('mouseover', handleMouseEnter);
     };
   }, []);
 
   return (
-    <>
-      {/* Main cursor */}
-      <motion.div
-        ref={cursorRef}
-        className="fixed pointer-events-none z-[999] mix-blend-difference"
-        style={{
-          x: cursorX,
-          y: cursorY,
-        }}
-      >
-        <div className="relative w-8 h-8">
-          <div className="absolute inset-0 rounded-full bg-white opacity-50 blur-sm" />
-          <div className="absolute inset-[2px] rounded-full bg-white" />
-        </div>
-      </motion.div>
-
-      {/* Gradient trail */}
-      <motion.div
-        className="fixed pointer-events-none z-[998] w-32 h-32 rounded-full opacity-30 blur-3xl"
-        style={{
-          background: 'linear-gradient(45deg, #FF8A80, #82B1FF)',
-          x: cursorX,
-          y: cursorY,
-          scale: 0.5,
-        }}
-      />
-    </>
+    <motion.div
+      className="fixed top-0 left-0 pointer-events-none z-[9999] mix-blend-difference"
+      animate={{
+        x: mousePosition.x,
+        y: mousePosition.y,
+        scale: isHovering ? 2 : 1
+      }}
+      transition={{
+        type: "spring",
+        stiffness: 150,
+        damping: 15,
+        mass: 0.1
+      }}
+    >
+      <div className="w-8 h-8 bg-white rounded-full glow opacity-90" />
+    </motion.div>
   );
 }; 

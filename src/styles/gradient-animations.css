@@ -1,0 +1,194 @@
+@keyframes liquid-motion {
+  0% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.8;
+  }
+  25% {
+    transform: translate(-1%, 1%) scale(1.02);
+    opacity: 1;
+  }
+  50% {
+    transform: translate(1%, -1%) scale(0.98);
+    opacity: 0.8;
+  }
+  75% {
+    transform: translate(1%, 1%) scale(1.02);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.8;
+  }
+}
+
+@keyframes float {
+  0% {
+    transform: translate(0, 0) scale(1) rotate(0);
+  }
+  33% {
+    transform: translate(1%, 1%) scale(1.02) rotate(1deg);
+  }
+  66% {
+    transform: translate(-1%, -1%) scale(0.98) rotate(-1deg);
+  }
+  100% {
+    transform: translate(0, 0) scale(1) rotate(0);
+  }
+}
+
+.animate-liquid {
+  animation: liquid-motion 20s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  will-change: transform, opacity;
+  mix-blend-mode: screen;
+}
+
+@keyframes deep-pulse {
+  0% {
+    opacity: 0.7;
+    filter: brightness(0.8);
+  }
+  50% {
+    opacity: 0.9;
+    filter: brightness(1.1);
+  }
+  100% {
+    opacity: 0.7;
+    filter: brightness(0.8);
+  }
+}
+
+.animate-deep-pulse {
+  animation: deep-pulse 10s ease-in-out infinite;
+}
+
+/* Add a subtle pulse animation to the blurred elements */
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+}
+
+@keyframes gradient-breathe {
+  0% {
+    background-position: 0% 50%;
+    opacity: 0.8;
+    filter: hue-rotate(0deg) saturate(1);
+  }
+  25% {
+    background-position: 50% 25%;
+    opacity: 0.9;
+    filter: hue-rotate(15deg) saturate(1.2);
+  }
+  50% {
+    background-position: 100% 50%;
+    opacity: 1;
+    filter: hue-rotate(30deg) saturate(1.4);
+  }
+  75% {
+    background-position: 50% 75%;
+    opacity: 0.9;
+    filter: hue-rotate(15deg) saturate(1.2);
+  }
+  100% {
+    background-position: 0% 50%;
+    opacity: 0.8;
+    filter: hue-rotate(0deg) saturate(1);
+  }
+}
+
+@keyframes text-gradient-breathe {
+  0% {
+    background-position: 0% 50%;
+    opacity: 0.9;
+    filter: hue-rotate(0deg) saturate(1);
+  }
+  25% {
+    background-position: 50% 25%;
+    opacity: 0.95;
+    filter: hue-rotate(10deg) saturate(1.1);
+  }
+  50% {
+    background-position: 100% 50%;
+    opacity: 1;
+    filter: hue-rotate(20deg) saturate(1.2);
+  }
+  75% {
+    background-position: 50% 75%;
+    opacity: 0.95;
+    filter: hue-rotate(10deg) saturate(1.1);
+  }
+  100% {
+    background-position: 0% 50%;
+    opacity: 0.9;
+    filter: hue-rotate(0deg) saturate(1);
+  }
+}
+
+.animate-gradient-breathe {
+  background-size: 200% 200%;
+  animation: gradient-breathe 8s ease infinite;
+  transition: all 0.3s ease;
+}
+
+.animate-text-gradient {
+  background-size: 200% auto;
+  animation: text-gradient-breathe 8s ease infinite;
+  transition: all 0.3s ease;
+}
+
+@keyframes liquid-right {
+  0% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.8;
+  }
+  33% {
+    transform: translate(-2%, -1%) scale(1.05);
+    opacity: 1;
+  }
+  66% {
+    transform: translate(2%, 1%) scale(0.95);
+    opacity: 0.8;
+  }
+  100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.8;
+  }
+}
+
+@keyframes liquid-left {
+  0% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.8;
+  }
+  33% {
+    transform: translate(2%, 1%) scale(1.05);
+    opacity: 1;
+  }
+  66% {
+    transform: translate(-2%, -1%) scale(0.95);
+    opacity: 0.8;
+  }
+  100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.8;
+  }
+}
+
+.animate-liquid-right {
+  animation: liquid-right 30s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  will-change: transform, opacity;
+}
+
+.animate-liquid-left {
+  animation: liquid-left 30s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  will-change: transform, opacity;
+} 

@@ -775,16 +775,16 @@ const ProjectCard = memo(({
 }) => {
   return (
     <div
-      className="group relative overflow-hidden cursor-pointer border border-white/20 rounded-2xl bg-white/10"
+      className="group relative overflow-hidden cursor-pointer border border-white/20 rounded-none bg-white/10"
     >
       <Link to={`/project/${project.id}`} className="block">
-        <div className="aspect-video relative bg-white/5">
+        <div className="aspect-video relative bg-white/5 overflow-hidden">
           <img
             src={project.image}
             alt={project.title}
             loading="lazy"
             decoding="async"
-            className="w-full h-full object-cover absolute inset-0"
+            className="w-full h-full object-contain absolute inset-0 hover:scale-105 transition-transform duration-300"
           />
         </div>
         <div className="p-6">

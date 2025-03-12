@@ -186,6 +186,20 @@ export default {
             filter: 'hue-rotate(360deg)'
           }
         },
+        'gradient-xy': {
+          '0%, 100%': {
+            'background-size': '400% 400%',
+            'background-position': 'left center'
+          },
+          '50%': {
+            'background-size': '400% 400%',
+            'background-position': 'right center'
+          }
+        },
+        'gradient-breathe': {
+          '0%, 100%': { opacity: 0.3 },
+          '50%': { opacity: 0.8 }
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -216,6 +230,8 @@ export default {
         'hue-rotate-reverse': 'hue-rotate-reverse 30s linear infinite',
         'glow-slow': 'glow-slow 30s ease-in-out infinite',
         'glow-slow-delayed': 'glow-slow-delayed 30s ease-in-out infinite 15s',
+        'gradient-xy': 'gradient-xy 3s linear infinite',
+        'gradient-breathe': 'gradient-breathe 4s ease-in-out infinite',
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
