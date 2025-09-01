@@ -33,6 +33,16 @@ const certificates: Certificate[] = [
     verificationUrl: "https://www.udemy.com/certificate/UC-6a8a0a42-8186-4214-91d9-908a1d44cdb2/",
     screenshot: "/images/certificates/webdev.jpg",
     description: "Full-stack web development course covering modern web technologies including HTML5, CSS3, JavaScript, React, Node.js, and MongoDB. Developed practical skills through hands-on projects."
+  },
+  {
+    id: "3",
+    title: "Manual Testing Certification",
+    provider: "Testing Institute",
+    date: "2025", 
+    verificationId: "UC-8a75e12a-e7da-4ac7-b743-6a82ccad87cd",
+    verificationUrl: "/images/certificates/Manual testing Certificat.pdf",
+    screenshot: "/images/certificates/manual-testing-cert.jpg",
+    description: "Comprehensive manual testing certification covering test planning, test case design, defect reporting, and quality assurance methodologies. Developed expertise in functional testing, regression testing, and user acceptance testing."
   }
 ];
 
@@ -101,7 +111,7 @@ const CertificateCard = ({ certificate }: { certificate: Certificate }) => {
                 className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 hover:bg-primary/20 
                   text-primary rounded-none transition-colors text-sm border border-primary/20"
               >
-                Verify Certificate
+                {certificate.verificationUrl.includes('.pdf') ? 'Download Certificate' : 'Verify Certificate'}
                 <ExternalLink className="w-4 h-4" />
               </a>
             </div>

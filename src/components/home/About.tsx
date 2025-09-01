@@ -13,50 +13,78 @@ const skillCategories = [
       { name: "Java Fullstack", level: "Intermediate" },
       { name: "Python", level: "Intermediate" },
       { name: "C", level: "Intermediate" },
-      { name: "MySQL", level: "Intermediate" },
+      { name: "JavaScript", level: "Intermediate" },
     ]
   },
   {
     title: "Web Development",
     skills: [
-      { name: "React & Express JS", level: "Basic" },
-      { name: "HTML5 & CSS3", level: "Intermediate" },
-      { name: "JavaScript", level: "Basic" },
-      { name: "Git", level: "Intermediate" },
+      { name: "React & Express JS", level: "Intermediate" },
+      { name: "HTML5 & CSS3", level: "Advanced" },
+      { name: "Node.js", level: "Intermediate" },
+      { name: "Git & GitHub", level: "Intermediate" },
+    ]
+  },
+  {
+    title: "Database & Tools",
+    skills: [
+      { name: "MySQL", level: "Intermediate" },
+      { name: "MongoDB", level: "Basic" },
+      { name: "Postman", level: "Intermediate" },
+      { name: "VS Code", level: "Advanced" },
+    ]
+  },
+  {
+    title: "Testing & Quality Assurance",
+    skills: [
+      { name: "Manual Testing", level: "Advanced" },
+      { name: "Test Case Design", level: "Advanced" },
+      { name: "Bug Reporting", level: "Intermediate" },
+      { name: "Test Documentation", level: "Intermediate" },
     ]
   }
 ];
 
 const experiences = [
   {
+    title: "Software Development",
+    description: "Full-stack development experience with focus on creating scalable web applications using modern technologies and best practices",
+    icon: "💻"
+  },
+  {
+    title: "Quality Assurance",
+    description: "Comprehensive manual testing expertise including test planning, execution, and defect management to ensure software quality",
+    icon: "🔍"
+  },
+  {
     title: "Project Management",
-    description: "Managed and led various academic projects, ensuring timely delivery and quality outcomes",
-    icon: "💼"
-  },
-  {
-    title: "Frontend Development",
-    description: "Essential experience in front-end development, focusing on creating responsive websites using HTML, CSS, and JavaScript",
-    icon: "🎨"
-  },
-  {
-    title: "Backend Development",
-    description: "Key experience in backend development, mainly building and managing server-side applications using PHP, JavaScript, Python, and Flask",
-    icon: "⚙️"
+    description: "Led academic and personal projects from conception to deployment, ensuring timely delivery and maintaining high code quality standards",
+    icon: "📋"
   }
 ];
 
 const education = [
   {
+    degree: "MCA (Master of Computer Applications)",
+    school: "Mysore University",
+    year: "2025-Present",
+    icon: "🎓",
+    details: "Currently pursuing - Advanced computer applications and software engineering",
+    status: "Currently Pursuing"
+  },
+  {
     degree: "BCA (Bachelor of Computer Applications)",
-    school: "Dr.CV Raman College, Davangere",
+    school: "Dr. CV Raman College, Davangere",
     year: "2021-2024",
-    icon: "🎓"
+    icon: "🎓",
+    details: "Specialized in software development and database management"
   },
   {
     degree: "PUC (Pre-University College)",
     school: "DRM Science College, Davangere",
     year: "2019-2021",
-    icon: "📚"
+    icon: "📚",
+    details: "Science stream with focus on mathematics and computer science"
   }
 ];
 
@@ -167,10 +195,13 @@ const About = () => {
               
               <div className="space-y-6">
                 <p className="text-xl text-muted-foreground leading-relaxed about-text font-light tracking-wide">
-                  I am glad you are here! Hi, I'm <span className="text-primary font-semibold">Prajwal RM</span>.
+                  Hello! I'm <span className="text-primary font-semibold">Prajwal RM</span>, a passionate software developer and quality assurance specialist.
                 </p>
                 <p className="text-lg text-muted-foreground leading-relaxed about-text font-light tracking-wide">
-                I am a passionate software developer with expertise in full-stack web development and a strong foundation in programming languages like Python and Java. Through my academic journey and personal projects, I've developed proficiency in creating responsive, user-centric web applications that deliver exceptional user experiences. My technical skills span both frontend and backend development, complemented by hands-on experience with modern AI tools and technologies. I am driven by a desire to solve complex problems and continuously expand my knowledge in emerging technologies. My commitment to clean code and efficient solutions makes me well-equipped to tackle challenging development projects.
+                  With a strong foundation in full-stack development and comprehensive manual testing expertise, I specialize in creating robust, user-centric applications that deliver exceptional experiences. My technical journey encompasses modern web technologies, database management, and quality assurance practices.
+                </p>
+                <p className="text-lg text-muted-foreground leading-relaxed about-text font-light tracking-wide">
+                  I am committed to writing clean, maintainable code and implementing thorough testing strategies to ensure software reliability. My approach combines technical proficiency with a keen eye for detail, making me well-equipped to tackle complex development challenges while maintaining high quality standards.
                 </p>
               </div>
             </div>
@@ -232,7 +263,7 @@ const About = () => {
                 variants={skillVariants}
               >
                 <span className="text-4xl">💼</span>
-                Experience
+                Professional Experience
               </motion.h3>
 
               <div className="grid grid-cols-1 gap-8">
@@ -371,6 +402,14 @@ const About = () => {
                           <p className="text-sm text-muted-foreground/60 mt-2 group-hover:text-primary/60 font-light tracking-wide">
                             {edu.year}
                           </p>
+                          <p className="text-sm text-muted-foreground/80 mt-1 font-light tracking-wide">
+                            {edu.details}
+                          </p>
+                          {edu.status && (
+                            <span className="inline-block px-2 py-1 text-xs rounded-full bg-green-500/10 text-green-500 font-medium tracking-wide mt-2">
+                              {edu.status}
+                            </span>
+                          )}
                         </div>
                       </div>
 

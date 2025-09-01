@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
-import { Menu, X } from "lucide-react";
+import { Menu, X, ChevronDown, FileText } from "lucide-react";
 
 const navItems = [
   { name: "About", href: "#about" },
@@ -9,10 +9,24 @@ const navItems = [
   { name: "Contact", href: "#contact" }
 ];
 
+const resumeOptions = [
+  {
+    name: "Development Role",
+    file: "/images/Resumes/PRAJWAL R MAKANUR Development.pdf",
+    icon: "💻"
+  },
+  {
+    name: "Manual Testing Role",
+    file: "/images/Resumes/PRAJWAL R MAKANUR Mannual testing.pdf",
+    icon: "🔍"
+  }
+];
+
 export const Navbar = () => {
   const [activeSection, setActiveSection] = useState("");
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isResumeDropdownOpen, setIsResumeDropdownOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -55,6 +69,12 @@ export const Navbar = () => {
       setActiveSection(targetId);
       setIsMobileMenuOpen(false);
     }
+  };
+
+  const handleResumeClick = (filePath: string) => {
+    window.open(filePath, '_blank');
+    setIsResumeDropdownOpen(false);
+    setIsMobileMenuOpen(false);
   };
 
   return (
@@ -114,6 +134,42 @@ export const Navbar = () => {
                 </a>
               </li>
             ))}
+            
+            {/* Resume Dropdown */}
+            <li className="relative">
+              <button
+                onClick={() => setIsResumeDropdownOpen(!isResumeDropdownOpen)}
+                className={cn(
+                  "flex items-center gap-2 text-sm font-medium transition-all relative py-2",
+                  "after:absolute after:left-0 after:bottom-0 after:h-[2px] after:bg-primary after:transition-all after:duration-300",
+                  isResumeDropdownOpen
+                    ? "text-primary after:w-full"
+                    : "text-foreground/70 after:w-0 hover:text-primary hover:after:w-full"
+                )}
+              >
+                <FileText className="w-4 h-4" />
+                View Resume
+                <ChevronDown className={cn(
+                  "w-4 h-4 transition-transform duration-200",
+                  isResumeDropdownOpen ? "rotate-180" : ""
+                )} />
+              </button>
+              
+              {isResumeDropdownOpen && (
+                <div className="absolute top-full left-0 mt-2 w-64 bg-background/95 backdrop-blur-lg border border-white/10 rounded-lg shadow-lg py-2">
+                  {resumeOptions.map((option) => (
+                    <button
+                      key={option.name}
+                      onClick={() => handleResumeClick(option.file)}
+                      className="w-full flex items-center gap-3 px-4 py-3 text-left hover:bg-primary/10 transition-colors"
+                    >
+                      <span className="text-lg">{option.icon}</span>
+                      <span className="text-sm font-medium">{option.name}</span>
+                    </button>
+                  ))}
+                </div>
+              )}
+            </li>
           </ul>
 
           <button
@@ -146,11 +202,39 @@ export const Navbar = () => {
                     </a>
                   </li>
                 ))}
+                
+                {/* Mobile Resume Section */}
+                <li className="border-t border-white/10 pt-4">
+                  <div className="text-lg font-medium text-foreground/70 mb-3 flex items-center gap-2">
+                    <FileText className="w-5 h-5" />
+                    View Resume
+                  </div>
+                  <div className="flex flex-col gap-2">
+                    {resumeOptions.map((option) => (
+                      <button
+                        key={option.name}
+                        onClick={() => handleResumeClick(option.file)}
+                        className="flex items-center gap-3 px-4 py-3 text-left hover:bg-primary/10 transition-colors rounded-lg"
+                      >
+                        <span className="text-lg">{option.icon}</span>
+                        <span className="text-sm font-medium">{option.name}</span>
+                      </button>
+                    ))}
+                  </div>
+                </li>
               </ul>
             </div>
           )}
         </div>
       </nav>
+      
+      {/* Click outside to close dropdown */}
+      {isResumeDropdownOpen && (
+        <div 
+          className="fixed inset-0 z-40" 
+          onClick={() => setIsResumeDropdownOpen(false)}
+        />
+      )}
     </header>
   );
 };
